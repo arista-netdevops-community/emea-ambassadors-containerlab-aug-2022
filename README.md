@@ -72,6 +72,22 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
             search: [ lab.net ]
     ```
 
+5. Install cloud image utils: `sudo apt install cloud-image-utils`
+6. Generate new image with cloud config: `cloud-localds -v --network-config=network_static.cfg ambassadors_clab_seed.img cloud_init.cfg`
+7. Create the VM:
+
+    ```bash
+    virt-install --name ambassadors_clab \
+    --virt-type kvm --memory 8192 --vcpus 4 \
+    --boot hd,menu=on \
+    --disk path=~/ambassadors_clab_seed.img,device=cdrom \
+    --disk path=/var/lib/libvirt/images/arista_ambassadors_clab.qcow2,device=disk \
+    --graphics vnc \
+    --os-type Linux --os-variant ubuntu20.04 \
+    --network network:default \
+    --console pty,target_type=serial
+    ```
+
 The lab setup diagram:
 
 ![lab diagram](media/lab_setup.png)
