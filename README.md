@@ -2,6 +2,10 @@
 
 > This repository is a step-by-step guide explaining how to build the demo lab presented on the Arista EMEA Ambassadors session, Aug 2022.
 
+- [EMEA Ambassadors: Containerlab Session, Aug 2022](#emea-ambassadors-containerlab-session-aug-2022)
+  - [Prerequisites](#prerequisites)
+  - [How to Create Ubuntu VM on KVM](#how-to-create-ubuntu-vm-on-kvm)
+
 ## Prerequisites
 
 To build the lab an Ubuntu LTS VM is required.  We will be using Ubuntu Server 20.04 LTS in this guide.  
