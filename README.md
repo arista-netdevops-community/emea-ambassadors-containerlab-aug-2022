@@ -4,7 +4,7 @@
 
 - [EMEA Ambassadors: Containerlab Session, Aug 2022](#emea-ambassadors-containerlab-session-aug-2022)
   - [Prerequisites](#prerequisites)
-  - [How to Create Ubuntu VM on KVM](#how-to-create-ubuntu-vm-on-kvm)
+  - [How to Create Ubuntu VM on KVM (Optional)](#how-to-create-ubuntu-vm-on-kvm-optional)
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ You can use a hypervisor of your choice, but this guide will only provide an exa
 
 For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpus. Only x86 CPUs are supported.
 
-## How to Create Ubuntu VM on KVM
+## How to Create Ubuntu VM on KVM (Optional)
 
 > VMware and other hypervisors are not covered by this document, but can be used as well.
 
