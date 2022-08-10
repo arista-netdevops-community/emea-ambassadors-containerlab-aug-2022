@@ -5,6 +5,8 @@
         "EMEA",
         "ethernets",
         "localds",
-        "virt"
+        "pwauth",
+        "virt",
+        "virtio"
     ]
 }

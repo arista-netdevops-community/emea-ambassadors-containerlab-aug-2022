@@ -16,52 +16,53 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
 1. Get Ubuntu Cloud Image:
 
    ```bash
-   wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img
+   wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
    ```
 
-2. Create a disk based on the image (5GB maximum):
+2. Set env variables:
 
     ```bash
-    sudo qemu-img create -f qcow2 -F qcow2 -o backing_file=~/focal-server-cloudimg-amd64-disk-kvm.img /var/lib/libvirt/images/arista_ambassadors_clab.qcow2 5G
+    VM_IMAGE_DIR="/var/lib/libvirt/images"
+    VM_NAME="ambassadors_clab"
+    USERNAME="clab"
+    PASSWORD="clab"
     ```
 
-3. Create a file named `cloud_init.cfg` and add following config:
+3. Convert image to qcow2 disk (5GB maximum):
 
-    ```yaml
-    # ambassadors_clab host config
-    hostname: ambassadors_clab
-    fqdn: ambassadors_clab.lab.net
-    manage_etc_hosts: true
-    users:
-    - name: clab
-        sudo: ALL=(ALL) NOPASSWD:ALL
-        groups: users, admin
-        home: /home/ubuntu
-        shell: /bin/bash
-        lock_passwd: false
-    disable_root: false
+    ```bash
+    sudo mkdir $VM_IMAGE_DIR/$VM_NAME
+    sudo qemu-img convert -f qcow2 -O qcow2 focal-server-cloudimg-amd64.img $VM_IMAGE_DIR/$VM_NAME/disk1.qcow2
+    sudo qemu-img resize $VM_IMAGE_DIR/$VM_NAME/disk1.qcow2 5G
+    ```
+
+4. Create a file named cloud_init.cfg:
+
+    ```bash
+    sudo echo "#cloud-config
+    hostname: $VM_NAME
+    fqdn: $VM_NAME.lab.net
+    manage_etc_hosts: True
+    system_info:
+    default_user:
+        name: $USERNAME
+        home: /home/$USERNAME
+    password: $PASSWORD
     chpasswd:
-        expire: false
-        users:
-        - name: clab
-          password: clab
-          type: text
     expire: False
-    # /var/lib/cloud/instance/boot-finished
-    final_message: |
-        cloud-init has finished
-        version: $version
-        timestamp: $timestamp
-        datasource: $datasource
-        uptime: $uptime
+
+    # allow password auth
+    ssh_pwauth: True
+    " | sudo tee $VM_IMAGE_DIR/$VM_NAME/cloud_init.cfg > /dev/null
     ```
 
-4. Create a file named `network_static.cfg` and add following config:
+5. Create a file named network_static.cfg:
 
-    ```yaml
-    version: 2
+    ```bash
+    sudo echo """---
+    network:
     ethernets:
-        the_way_out:
+        enp1s0:
             dhcp4: false
             # and address from the default libvirt subnet
             # feel free to assign a different one
@@ -69,23 +70,24 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
             gateway4: 192.168.122.1
             nameservers:
                 addresses: [ 8.8.8.8 ]
-            search: [ lab.net ]
+    version: 2
+    """ | sudo tee $VM_IMAGE_DIR/$VM_NAME/network_static.cfg > /dev/null
     ```
 
-5. Install cloud image utils: `sudo apt install cloud-image-utils`
-6. Generate new image with cloud config: `cloud-localds -v --network-config=network_static.cfg ambassadors_clab_seed.img cloud_init.cfg`
-7. Create the VM:
+6. Install cloud image utils: `sudo apt update && sudo apt install cloud-image-utils -y`
+7. Generate new image with cloud config: `sudo cloud-localds -v --network-config=$VM_IMAGE_DIR/$VM_NAME/network_static.cfg $VM_IMAGE_DIR/$VM_NAME/cdrom.iso $VM_IMAGE_DIR/$VM_NAME/cloud_init.cfg`
+8. Create the VM:
 
     ```bash
-    virt-install --name ambassadors_clab \
+    sudo virt-install --name $VM_NAME \
     --virt-type kvm --memory 8192 --vcpus 4 \
-    --boot hd,menu=on \
-    --disk path=~/ambassadors_clab_seed.img,device=cdrom \
-    --disk path=/var/lib/libvirt/images/arista_ambassadors_clab.qcow2,device=disk \
-    --graphics vnc \
-    --os-type Linux --os-variant ubuntu20.04 \
-    --network network:default \
-    --console pty,target_type=serial
+    --disk path=$VM_IMAGE_DIR/$VM_NAME/disk1.qcow2,device=disk \
+    --disk path=$VM_IMAGE_DIR/$VM_NAME/cdrom.iso,device=cdrom \
+    --os-type linux --os-variant ubuntu20.04 \
+    --graphics none \
+    --network network=default,model=virtio \
+    --wait 0 \
+    --import
     ```
 
 The lab setup diagram:
