@@ -5,6 +5,10 @@
 - [EMEA Ambassadors: Containerlab Session, Aug 2022](#emea-ambassadors-containerlab-session-aug-2022)
   - [Prerequisites](#prerequisites)
   - [How to Create Ubuntu VM on KVM (Optional)](#how-to-create-ubuntu-vm-on-kvm-optional)
+  - [Use VSCode Remote Development (Optional)](#use-vscode-remote-development-optional)
+  - [Setup Docker on The Host](#setup-docker-on-the-host)
+  - [Import cEOS image](#import-ceos-image)
+  - [Clone The Lab Repository](#clone-the-lab-repository)
 
 ## Prerequisites
 
@@ -93,6 +97,51 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
     --wait 0 \
     --import
     ```
+
+9. Connect to the lab VM via console or SSH and execute the steps listed below on this VM.
+
+## Use VSCode Remote Development (Optional)
+
+You can use any terminal to connect to the lab VM via SSH or console. But it is highly recommended to use VSCode remote SSH development for the improved experience.
+
+{{ to be continued if time allows }}
+
+## Setup Docker on The Host
+
+1. Install Docker: `sudo curl -fsSL https://get.docker.com | sh`
+2. Add clab user to the docker group: `sudo usermod -aG docker ${USER}`
+3. Logout and login again.
+4. Check if Docker is installed correctly by running hello-world image: `docker run hello-world`
+
+## Import cEOS image
+
+1. Login to arista.com
+2. Go to `Support > Software Download`
+3. Select `EOS > Active Releases > 4.28 > EOS-4.28.1.1F > cEOS-lab`
+4. Download `cEOS-lab-4.28.1.1F.tar.xz`
+
+![Download cEOS](media/ceos-download.jpg)
+
+5. Upload image to the lab VM. For example: `sftp clab@192.168.122.22:/home/clab <<< $'put cEOS-lab-4.28.1.1F.tar.xz'`
+6. Go to the directory with the uploaded image and import the image: `docker import cEOS-lab-4.28.1.1F.tar.xz ceos-lab:4.28.1.1F`
+
+> NOTE: you can also import the image with the tag latest to allow quick "upgrade" of those lab where specific version is not required: `docker tag ceos-lab:4.28.1.1F ceos-lab:latest`
+
+## Clone The Lab Repository
+
+```bash
+clab@ubuntu:~$ pwd
+/home/clab
+clab@ubuntu:~$ git clone https://github.com/arista-netdevops-community/emea-ambassadors-containerlab-aug-2022.git
+Cloning into 'emea-ambassadors-containerlab-aug-2022'...
+remote: Enumerating objects: 42, done.
+remote: Counting objects: 100% (42/42), done.
+remote: Compressing objects: 100% (28/28), done.
+remote: Total 42 (delta 13), reused 36 (delta 9), pack-reused 0
+Unpacking objects: 100% (42/42), 91.41 KiB | 2.61 MiB/s, done.
+clab@ubuntu:~$ ls
+emea-ambassadors-containerlab-aug-2022
+```
 
 The lab setup diagram:
 

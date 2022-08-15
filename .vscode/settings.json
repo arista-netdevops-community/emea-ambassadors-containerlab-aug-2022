@@ -6,6 +6,7 @@
         "ethernets",
         "localds",
         "pwauth",
+        "usermod",
         "virt",
         "virtio"
     ]
