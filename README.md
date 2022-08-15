@@ -155,7 +155,7 @@ clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$
 
 ## Deploy The Lab
 
-`containerlab deploy`
+`containerlab deploy --debug`
 
 The lab setup diagram:
 
