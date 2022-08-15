@@ -1,0 +1,23 @@
+---
+name: ambassadors_clab
+
+mgmt:
+  network: clab_custom_mgmt
+  ipv4_subnet: 192.168.123.0/24
+
+topology:
+  kinds:
+    ceos:
+      startup-config: init-configs/ceos-cfg.j2
+      image: ceos-lab:latest
+  defaults:
+    kind: ceos
+  nodes:
+    spine1:
+      mgmt_ipv4: 192.168.123.11
+    spine2:
+      mgmt_ipv4: 192.168.123.12
+    leaf1:
+      mgmt_ipv4: 192.168.123.21
+    leaf2:
+      mgmt_ipv4: 192.168.123.22
