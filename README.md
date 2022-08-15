@@ -149,6 +149,8 @@ remote: Total 42 (delta 13), reused 36 (delta 9), pack-reused 0
 Unpacking objects: 100% (42/42), 91.41 KiB | 2.61 MiB/s, done.
 clab@ubuntu:~$ ls
 emea-ambassadors-containerlab-aug-2022
+clab@ubuntu:~$ cd emea-ambassadors-containerlab-aug-2022
+clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$
 ```
 
 ## Deploy The Lab
