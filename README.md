@@ -9,7 +9,9 @@
   - [Use VSCode Remote Development (Optional)](#use-vscode-remote-development-optional)
   - [Setup Docker on The Host](#setup-docker-on-the-host)
   - [Import cEOS image](#import-ceos-image)
+  - [Install Containerlab](#install-containerlab)
   - [Clone The Lab Repository](#clone-the-lab-repository)
+  - [Deploy The Lab](#deploy-the-lab)
 
 ## Prerequisites
 
@@ -128,6 +130,11 @@ You can use any terminal to connect to the lab VM via SSH or console. But it is 
 
 > NOTE: you can also import the image with the tag latest to allow quick "upgrade" of those lab where specific version is not required: `docker tag ceos-lab:4.28.1.1F ceos-lab:latest`
 
+## Install Containerlab
+
+It's just a one-liner: `bash -c "$(curl -sL https://get.containerlab.dev)"`  
+Refer to the [Containerlab quick start documentation](https://containerlab.dev/quickstart/) for the details.
+
 ## Clone The Lab Repository
 
 ```bash
@@ -143,6 +150,10 @@ Unpacking objects: 100% (42/42), 91.41 KiB | 2.61 MiB/s, done.
 clab@ubuntu:~$ ls
 emea-ambassadors-containerlab-aug-2022
 ```
+
+## Deploy The Lab
+
+`containerlab deploy`
 
 The lab setup diagram:
 
