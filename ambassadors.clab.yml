@@ -20,3 +20,9 @@ topology:
       mgmt_ipv4: 192.168.123.21
     leaf2:
       mgmt_ipv4: 192.168.123.22
+
+  links:
+    - endpoints: ["spine1:eth1_1", "leaf1:eth1_1"]
+    - endpoints: ["spine1:eth2_1", "leaf2:eth1_1"]
+    - endpoints: ["spine2:eth1_1", "leaf1:eth2_1"]
+    - endpoints: ["spine2:eth2_1", "leaf1:eth2_1"]
