@@ -25,4 +25,4 @@ topology:
     - endpoints: ["spine1:eth1_1", "leaf1:eth1_1"]
     - endpoints: ["spine1:eth2_1", "leaf2:eth1_1"]
     - endpoints: ["spine2:eth1_1", "leaf1:eth2_1"]
-    - endpoints: ["spine2:eth2_1", "leaf1:eth2_1"]
+    - endpoints: ["spine2:eth2_1", "leaf2:eth2_1"]
