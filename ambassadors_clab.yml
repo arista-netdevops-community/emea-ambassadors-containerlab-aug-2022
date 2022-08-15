@@ -8,7 +8,6 @@ mgmt:
 topology:
   kinds:
     ceos:
-      startup-config: init-configs/ceos-cfg.j2
       image: ceos-lab:latest
   defaults:
     kind: ceos
