@@ -1,0 +1,34 @@
+no aaa root
+!
+username admin privilege 15 role network-admin secret admin
+!
+service routing protocols model multi-agent
+!
+hostname {{ .ShortName }}
+!
+spanning-tree mode mstp
+!
+management api http-commands
+   no shutdown
+!
+interface Port-Channel1
+   no switchport
+   ip address 10.100.100.100/24
+!
+interface Ethernet1
+   channel-group 1 mode active
+!
+interface Ethernet2
+   channel-group 1 mode active
+!
+interface Management0
+   vrf OOB
+{% if .MgmtIPv4Address %}   ip address {{ .MgmtIPv4Address }}/{{ .MgmtIPv4PrefixLength }}{% endif %}
+!
+no ip routing vrf OOB
+ip routing
+!
+ip route 0.0.0.0/0 192.168.123.1 vrf OOB
+ip route 0.0.0.0/0 10.100.100.1
+!
+end
