@@ -6,7 +6,6 @@
 - [EMEA Ambassadors: Containerlab Session, Aug 2022](#emea-ambassadors-containerlab-session-aug-2022)
   - [Prerequisites](#prerequisites)
   - [How to Create Ubuntu VM on KVM (Optional)](#how-to-create-ubuntu-vm-on-kvm-optional)
-  - [Use VSCode Remote Development (Optional)](#use-vscode-remote-development-optional)
   - [Setup Docker on The Host](#setup-docker-on-the-host)
   - [Import cEOS image](#import-ceos-image)
   - [Install Containerlab](#install-containerlab)
@@ -44,7 +43,7 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
     ```bash
     sudo mkdir $VM_IMAGE_DIR/$VM_NAME
     sudo qemu-img convert -f qcow2 -O qcow2 focal-server-cloudimg-amd64.img $VM_IMAGE_DIR/$VM_NAME/disk1.qcow2
-    sudo qemu-img resize $VM_IMAGE_DIR/$VM_NAME/disk1.qcow2 5G
+    sudo qemu-img resize $VM_IMAGE_DIR/$VM_NAME/disk1.qcow2 10G
     ```
 
 4. Create a file named cloud_init.cfg:
@@ -103,12 +102,6 @@ For this lab it is recommended to reserve minimum 8GB RAM and 4 cpu threads/vcpu
 
 9. Connect to the lab VM via console or SSH and execute the steps listed below on this VM.
 
-## Use VSCode Remote Development (Optional)
-
-You can use any terminal to connect to the lab VM via SSH or console. But it is highly recommended to use VSCode remote SSH development for the improved experience.
-
-{{ to be continued if time allows }}
-
 ## Setup Docker on The Host
 
 1. Install Docker: `sudo curl -fsSL https://get.docker.com | sh`
@@ -122,13 +115,21 @@ You can use any terminal to connect to the lab VM via SSH or console. But it is 
 2. Go to `Support > Software Download`
 3. Select `EOS > Active Releases > 4.28 > EOS-4.28.1.1F > cEOS-lab`
 4. Download `cEOS-lab-4.28.1.1F.tar.xz`
-
 ![Download cEOS](media/ceos-download.jpg)
-
 5. Upload image to the lab VM. For example: `sftp clab@192.168.122.22:/home/clab <<< $'put cEOS-lab-4.28.1.1F.tar.xz'`
 6. Go to the directory with the uploaded image and import the image: `docker import cEOS-lab-4.28.1.1F.tar.xz ceos-lab:4.28.1.1F`
 
-> NOTE: you can also import the image with the tag latest to allow quick "upgrade" of those lab where specific version is not required: `docker tag ceos-lab:4.28.1.1F ceos-lab:latest`
+    > NOTE: you can also import the image with the tag latest to allow quick "upgrade" of those lab where specific version is not required: `docker tag ceos-lab:4.28.1.1F ceos-lab:latest`
+
+7. Confirm that the image was imported successfully:
+
+    ```bash
+    clab@ubuntu:~$ docker image ls
+    REPOSITORY    TAG         IMAGE ID       CREATED         SIZE
+    ceos-lab      4.28.1.1F   646c604b2596   9 hours ago     1.9GB
+    ceos-lab      latest      646c604b2596   9 hours ago     1.9GB
+    hello-world   latest      feb5d9fea6a5   10 months ago   13.3kB
+    ```
 
 ## Install Containerlab
 
