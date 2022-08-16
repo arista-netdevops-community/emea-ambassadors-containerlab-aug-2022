@@ -156,8 +156,8 @@ clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$
 
 ## Deploy The Lab
 
-`containerlab deploy --debug`
-
 The lab setup diagram:
 
 ![lab diagram](media/lab_setup.png)
+
+Inspect `ambassadors.clab.yml` and deploy the lab using `containerlab deploy --debug` command. This command will search for the `.clab.yml` file in your current directory. You can also specify the name of the file manually. `--debug` is optional, but provides additional information while Containerlab is starting.
