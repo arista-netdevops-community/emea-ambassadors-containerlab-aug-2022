@@ -11,6 +11,7 @@
   - [Install Containerlab](#install-containerlab)
   - [Clone The Lab Repository](#clone-the-lab-repository)
   - [Deploy The Lab](#deploy-the-lab)
+  - [Connect to the Lab](#connect-to-the-lab)
 
 ## Prerequisites
 
@@ -160,6 +161,30 @@ The lab setup diagram:
 
 ![lab diagram](media/lab_setup.png)
 
-Inspect `ambassadors.clab.yml` and deploy the lab using `containerlab deploy --debug` command. This command will search for the `.clab.yml` file in your current directory. You can also specify the name of the file manually. `--debug` is optional, but provides additional information while Containerlab is starting.
+Inspect `ambassadors_default_cfg.clab.yml` and deploy the lab:
+
+```bash
+sudo containerlab deploy --debug --topo ambassadors_default_cfg.clab.yml
+```
+
+This command will deploy containerlab with the default EOS configuration provided by containerlab. The `--debug` flag is optional, but provides additional information while Containerlab is starting.
+
+> NOTE: If there is a single `.clab.yml` file in the current directory, it is possible to use `sudo containerlab deploy` command without specifying the topology file. As we have multiple files in the directory, we must specify the topology explicitly.
+
+## Connect to the Lab
+
+Once the lab is ready, you'll see a table with the list of deployed containers, their host names and management IPs:
+
+```text
++---+------------------------------+--------------+-----------------+------+---------+--------------------+--------------+
+| # |             Name             | Container ID |      Image      | Kind |  State  |    IPv4 Address    | IPv6 Address |
++---+------------------------------+--------------+-----------------+------+---------+--------------------+--------------+
+| 1 | clab-ambassadors_clab-a_host | 436eb12b6ebc | ceos-lab:latest | ceos | running | 192.168.123.100/24 | N/A          |
+| 2 | clab-ambassadors_clab-leaf1  | 780403a150a9 | ceos-lab:latest | ceos | running | 192.168.123.21/24  | N/A          |
+| 3 | clab-ambassadors_clab-leaf2  | 79dba4526c6b | ceos-lab:latest | ceos | running | 192.168.123.22/24  | N/A          |
+| 4 | clab-ambassadors_clab-spine1 | af3b97f141fa | ceos-lab:latest | ceos | running | 192.168.123.11/24  | N/A          |
+| 5 | clab-ambassadors_clab-spine2 | 1655913706d5 | ceos-lab:latest | ceos | running | 192.168.123.12/24  | N/A          |
++---+------------------------------+--------------+-----------------+------+---------+--------------------+--------------+
+```
 
 Check connectivity: `a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done`

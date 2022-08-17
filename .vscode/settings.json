@@ -9,6 +9,7 @@
         "localds",
         "mgmt",
         "pwauth",
+        "topo",
         "usermod",
         "virt",
         "virtio"
