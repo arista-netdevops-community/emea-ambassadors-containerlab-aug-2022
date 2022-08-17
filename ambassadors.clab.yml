@@ -14,19 +14,19 @@ topology:
   nodes:
     spine1:
       mgmt_ipv4: 192.168.123.11
-      # startup-config: init-configs/spine1.cfg
+      startup-config: init-configs/spine1.cfg
     spine2:
       mgmt_ipv4: 192.168.123.12
-      # startup-config: init-configs/spine2.cfg
+      startup-config: init-configs/spine2.cfg
     leaf1:
       mgmt_ipv4: 192.168.123.21
-      # startup-config: init-configs/leaf1.cfg
+      startup-config: init-configs/leaf1.cfg
     leaf2:
       mgmt_ipv4: 192.168.123.22
-      # startup-config: init-configs/leaf2.cfg
+      startup-config: init-configs/leaf2.cfg
     a_host:
       mgmt_ipv4: 192.168.123.100
-      # startup-config: init-configs/a_host.cfg
+      startup-config: init-configs/a_host.cfg
 
   links:
     - endpoints: ["spine1:eth1_1", "leaf1:eth1_1"]
