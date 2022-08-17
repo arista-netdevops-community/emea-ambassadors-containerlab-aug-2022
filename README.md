@@ -161,3 +161,5 @@ The lab setup diagram:
 ![lab diagram](media/lab_setup.png)
 
 Inspect `ambassadors.clab.yml` and deploy the lab using `containerlab deploy --debug` command. This command will search for the `.clab.yml` file in your current directory. You can also specify the name of the file manually. `--debug` is optional, but provides additional information while Containerlab is starting.
+
+Check connectivity: `a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done`
