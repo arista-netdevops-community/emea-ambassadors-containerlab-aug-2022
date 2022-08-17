@@ -11,7 +11,7 @@
   - [Install Containerlab](#install-containerlab)
   - [Clone The Lab Repository](#clone-the-lab-repository)
   - [Deploy The Lab](#deploy-the-lab)
-  - [Connect to the Lab](#connect-to-the-lab)
+  - [Inspect the Lab and Connect to the Containers](#inspect-the-lab-and-connect-to-the-containers)
 
 ## Prerequisites
 
@@ -171,7 +171,7 @@ This command will deploy containerlab with the default EOS configuration provide
 
 > NOTE: If there is a single `.clab.yml` file in the current directory, it is possible to use `sudo containerlab deploy` command without specifying the topology file. As we have multiple files in the directory, we must specify the topology explicitly.
 
-## Connect to the Lab
+## Inspect the Lab and Connect to the Containers
 
 Once the lab is ready, you'll see a table with the list of deployed containers, their host names and management IPs:
 
@@ -186,5 +186,44 @@ Once the lab is ready, you'll see a table with the list of deployed containers, 
 | 5 | clab-ambassadors_clab-spine2 | 1655913706d5 | ceos-lab:latest | ceos | running | 192.168.123.12/24  | N/A          |
 +---+------------------------------+--------------+-----------------+------+---------+--------------------+--------------+
 ```
+
+You can also list containers using docker command:
+
+```bash
+clab@ubuntu:~$ docker container ls
+CONTAINER ID   IMAGE             COMMAND                  CREATED             STATUS             PORTS     NAMES
+edbc03859477   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-spine2
+c4cd010b2318   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-leaf2
+29250cd4881e   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-spine1
+32c576fcf575   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-leaf1
+4d25882a1a08   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-a_host
+```
+
+You can call the table again any time with `sudo clab inspect ambassadors_default_cfg.clab.yml`.
+
+Containerlab creates corresponding entries in the `/etc/hosts` file as well:
+
+```bash
+clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$ cat /etc/hosts | grep clab-
+###### CLAB-ambassadors_clab-START ######
+192.168.123.12  clab-ambassadors_clab-spine2
+192.168.123.22  clab-ambassadors_clab-leaf2
+192.168.123.11  clab-ambassadors_clab-spine1
+192.168.123.21  clab-ambassadors_clab-leaf1
+192.168.123.100 clab-ambassadors_clab-a_host
+###### CLAB-ambassadors_clab-END ######
+```
+
+To access cEOS CLI you can:
+
+1. SSH to the container. For ex.: `ssh admin@clab-ambassadors_clab-leaf1`. The default login is `admin` and password is `admin`
+2. Connect to the "console" using Docker command. For ex.: `docker exec -it clab-ambassadors_clab-leaf1 Cli`
+
+> NOTE: `docker exec -it clab-ambassadors_clab-leaf1 bash` allows to connect directly to the switch shell.
+
+Do some lab verification. For example:
+
+- Check the topology with `show lldp neighbors`
+- Check running config with `show run`
 
 Check connectivity: `a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done`
