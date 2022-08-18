@@ -302,6 +302,8 @@ Feel free to do some additional checks on leaf1 for example:
 - `show mlag`
 - `show port-channel dense`
 
+> NOTE: `ambassadors_custom_cfg.clab.yml` has custom interface mapping defined in `interface_mapping.json` and assigned to cEOS-lab containers as bind mount. This helps to change default Management0 interface to Management1 as on physical switches.
+
 ## Make Packet Capture
 
 Every container has it's own namespace. To list all interfaces for leaf1, execute following command on the lab VM:
