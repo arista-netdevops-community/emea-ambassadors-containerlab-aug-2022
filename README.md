@@ -278,8 +278,28 @@ To remove these files and have a clean environment on the next run, use `sudo co
 
 ## Deploy the Lab with Custom Startup Config
 
-to-be-updated
-Check connectivity: `a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done`
+Deploy the lab with the custom configuration:
+
+```bash
+sudo containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure
+```
+
+> NOTE: `--reconfigure` is required if `--cleanup` flag was not specified in the previous step. Otherwise custom startup configs will be ignored and configs in `clab-ambassadors_clab/` will be used instead.
+
+Custom startup configs are located in the `init-configs` directory and assigned to every node using `startup-config:` key in the `ambassadors_custom_cfg.clab.yml`. This allows creating pre-configured labs. In this case pre-configured MLAG between leaf switches and basic BGP underlay configuration. Host should be able to ping loopbacks of all leaf and spine switches. Connect to the host to confirm that:
+
+```bash
+clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$ ssh admin@clab-ambassadors_clab-a_host
+Password:
+a_host>en
+a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done
+```
+
+Feel free to do some additional checks on leaf1 for example:
+
+- `show ip bgp summary`
+- `show mlag`
+- `show port-channel dense`
 
 ## Make Packet Capture
 
