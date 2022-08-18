@@ -319,7 +319,60 @@ For additional details about packet capture check [cLab documentation](https://c
 
 ## Containerlab in a Container
 
-to-be-updated
+Destroy the lab with cleanup flag: `sudo containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup`
+
+It is possible to run the containerlab on the host without installing it. For that a Docker container with cLab can be executed on a Docker host.  
+This can be helpful to run Containerlab on an Intel-based Mac Book or in some special cases.
+
+Test that by running following command:
+
+```bash
+docker run --rm -it --privileged \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/hosts:/etc/hosts \
+  --pid="host" \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  ghcr.io/srl-labs/clab bash
+```
+
+This will start the container with cLab interactively. Once inside the container prompt, execute the following command to start the lab:
+
+```bash
+containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure
+```
+
+Check the lab and destroy it: `containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup`  
+Exit the container.
+
+The default `ghcr.io/srl-labs/clab` container is making all changes as root. That can cause permissions issues if you are working with your repository from the container prompt. It is better to use `ghcr.io/srl-labs/clab` as non-interactive or craft your own container to map the user ID correctly.
+
+To use the container in non-interactive way execute following command:
+
+```bash
+docker run --rm --privileged \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/hosts:/etc/hosts \
+  --pid="host" \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  ghcr.io/srl-labs/clab containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure
+```
+
+To destroy the lab:
+
+```bash
+docker run --rm --privileged \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/hosts:/etc/hosts \
+  --pid="host" \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  ghcr.io/srl-labs/clab containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup
+```
 
 ## Possible Scale Caveats
 
