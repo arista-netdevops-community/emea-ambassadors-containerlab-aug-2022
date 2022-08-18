@@ -45,8 +45,8 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
     && echo 'export PATH=$PATH:/home/clab/.local/bin' >> $HOME/.zshrc \
-    && echo 'alias lab_start="containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure"' >> $HOME/.zshrc \
-    && echo 'alias lab_stop="containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup"' >> $HOME/.zshrc \
+    && echo 'alias lab_start="sudo containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure"' >> $HOME/.zshrc \
+    && echo 'alias lab_stop="sudo containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup"' >> $HOME/.zshrc \
     && echo 'alias leaf1="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-leaf1"' >> $HOME/.zshrc \
     && echo 'alias leaf2="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-leaf2"' >> $HOME/.zshrc \
     && echo 'alias spine1="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-spine1"' >> $HOME/.zshrc \
