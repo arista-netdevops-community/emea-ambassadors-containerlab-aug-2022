@@ -12,6 +12,13 @@
   - [Clone The Lab Repository](#clone-the-lab-repository)
   - [Deploy The Lab](#deploy-the-lab)
   - [Inspect the Lab and Connect to the Containers](#inspect-the-lab-and-connect-to-the-containers)
+  - [Investigate Possible Privilege Caveats](#investigate-possible-privilege-caveats)
+  - [Destroy the Lab](#destroy-the-lab)
+  - [Deploy the Lab with Custom Startup Config](#deploy-the-lab-with-custom-startup-config)
+  - [Make Packet Capture](#make-packet-capture)
+  - [Containerlab in a Container](#containerlab-in-a-container)
+  - [Possible Scale Caveats](#possible-scale-caveats)
+  - [References](#references)
 
 ## Prerequisites
 
@@ -226,4 +233,31 @@ Do some lab verification. For example:
 - Check the topology with `show lldp neighbors`
 - Check running config with `show run`
 
+## Investigate Possible Privilege Caveats
+
+to-be-updated
+
+## Destroy the Lab
+
+to-be-updated
+
+## Deploy the Lab with Custom Startup Config
+
+to-be-updated
 Check connectivity: `a_host#bash for i in {1..4}; do ping -c 4 10.${i}.${i}.${i}; done`
+
+## Make Packet Capture
+
+to-be-updated
+
+## Containerlab in a Container
+
+to-be-updated
+
+## Possible Scale Caveats
+
+to-be-updated
+
+## References
+
+to-be-updated
