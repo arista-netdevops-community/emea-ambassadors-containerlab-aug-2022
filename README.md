@@ -303,7 +303,19 @@ Feel free to do some additional checks on leaf1 for example:
 
 ## Make Packet Capture
 
-to-be-updated
+Every container has it's own namespace. To list all interfaces for leaf1, execute following command on the lab VM:
+
+```bash
+sudo ip netns exec clab-ambassadors_clab-leaf1 ip link
+```
+
+Run following command and wait a few minutes to capture a BGP packets:
+
+```bash
+sudo ip netns exec clab-ambassadors_clab-leaf1 tcpdump -nni eth1_1 port 179 -vvv
+```
+
+For additional details about packet capture check [cLab documentation](https://containerlab.dev/manual/wireshark/).
 
 ## Containerlab in a Container
 
