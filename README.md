@@ -391,7 +391,7 @@ docker run --rm -it --privileged \
   --pid="host" \
   -w $(pwd) \
   -v $(pwd):$(pwd) \
-  ambassadors_clab:latest zsh
+  ambassadors_clab:latest
 ```
 
 ## Possible Scale Caveats
