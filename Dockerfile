@@ -24,7 +24,7 @@ RUN curl -fsSL https://get.docker.com | sh
 # add the user
 RUN useradd -md /home/clab -s /bin/zsh -u 1000 clab \
     && echo 'clab ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-    # add docker and sudo to avd group
+    # add clab user to docker group
     && usermod -aG docker clab \
     && usermod -aG sudo clab
 USER clab
@@ -44,7 +44,7 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo 'export TERM=xterm-256color' >>  $HOME/.zshrc \
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
-    && echo 'export PATH=$PATH:/home/avd/.local/bin' >> $HOME/.zshrc \
+    && echo 'export PATH=$PATH:/home/clab/.local/bin' >> $HOME/.zshrc \
     && echo 'alias lab_start="containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure"' >> $HOME/.zshrc \
     && echo 'alias lab_stop="containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup"' >> $HOME/.zshrc \
     && echo 'alias leaf1="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-leaf1"' >> $HOME/.zshrc \
@@ -55,3 +55,12 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 
 # install containerlab
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
+
+# add entrypoint script
+COPY ./entrypoint.sh /bin/entrypoint.sh
+RUN sudo chmod +x /bin/entrypoint.sh
+# use ENTRYPOINT instead of CMD to ensure that entryscript is always executed
+ENTRYPOINT [ "/bin/entrypoint.sh" ]
+
+# add gitconfig to be used if container is not called as VScode devcontainer
+COPY ./gitconfig /home/clab/gitconfig-clab-base-template
