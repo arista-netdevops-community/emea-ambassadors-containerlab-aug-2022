@@ -374,6 +374,13 @@ docker run --rm --privileged \
   ghcr.io/srl-labs/clab containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup
 ```
 
+Let's craft our own container now:
+
+```bash
+docker build --rm --pull --no-cache -f Dockerfile -t ambassadors_temp_image .
+docker build -f updateUID.Dockerfile -t ambassadors_clab:latest --build-arg BASE_IMAGE=ambassadors_temp_image --build-arg REMOTE_USER=clab --build-arg NEW_UID=$(shell id -u) --build-arg NEW_GID=$(shell id -g) --build-arg IMAGE_USER=clab . ;
+```
+
 ## Possible Scale Caveats
 
 to-be-updated
