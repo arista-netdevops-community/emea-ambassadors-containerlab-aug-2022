@@ -263,7 +263,18 @@ You may encounter similar "permission denied" errors in other cases. So, it's im
 
 ## Destroy the Lab
 
-to-be-updated
+Destroy the lab with `sudo containerlab destroy -t ambassadors_default_cfg.clab.yml`  
+This will stop all containers, but will keep the files created by clab for the next run. For example, startup-configs.  
+Check the flash content for leaf1 and inspect it's startup config:
+
+```bash
+clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$ ls clab-ambassadors_clab/leaf1/flash/
+AsuFastPktTransmit.log  SsuRestore.log        boot-config  fastpkttx.backup  kickstart-config  schedule        system_mac_address
+Fossil                  SsuRestoreLegacy.log  debug        if-wait.sh        persist           startup-config
+clab@ubuntu:~/emea-ambassadors-containerlab-aug-2022$ cat clab-ambassadors_clab/leaf1/flash/startup-config
+```
+
+To remove these files and have a clean environment on the next run, use `sudo containerlab destroy -t ambassadors_default_cfg.clab.yml --cleanup`
 
 ## Deploy the Lab with Custom Startup Config
 
