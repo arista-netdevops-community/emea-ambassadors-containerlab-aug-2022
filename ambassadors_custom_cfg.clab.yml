@@ -11,6 +11,9 @@ topology:
       image: ceos-lab:latest
   defaults:
     kind: ceos
+    binds:
+      # change Ma0 to Ma1
+      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
   nodes:
     spine1:
       mgmt_ipv4: 192.168.123.11
