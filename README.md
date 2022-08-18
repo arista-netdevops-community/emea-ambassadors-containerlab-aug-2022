@@ -17,6 +17,7 @@
   - [Deploy the Lab with Custom Startup Config](#deploy-the-lab-with-custom-startup-config)
   - [Make Packet Capture](#make-packet-capture)
   - [Containerlab in a Container](#containerlab-in-a-container)
+  - [Building a Custom Container with cLab](#building-a-custom-container-with-clab)
   - [Possible Scale Caveats](#possible-scale-caveats)
   - [References](#references)
 
@@ -374,10 +375,25 @@ docker run --rm --privileged \
   ghcr.io/srl-labs/clab containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup
 ```
 
-Let's craft our own container now:
+## Building a Custom Container with cLab
+
+It is possible to build a custom container with Containerlab installed. We are not going to discuss in detail how to build Docker containers, but required `Dockerfile`, `entrypoint.sh` and `gitconfig` are already present in this repository. There is also `updateUID.Dockerfile` that allows to change user id inside the container to match UID of the VM user. That is not required for our lab, but can a critical requirement in certain cases. For example, CentOS is very strict regarding user IDs.
+
+The custom container has following features:
+
+- ZSH and a nice prompt with a whale. =)
+- Number of Linux tools pre-installed.
+- Docker (in Docker) and Containerlab installed
+- Aliases to start and stop the lab and connect to the lab switches
+- Entrypoint
+- UID and GID inside the container matching UID and GID outside the container
+
+Let's build our own container now:
 
 ```bash
+# build a temp container with UID 1000
 docker build --rm --pull --no-cache -f Dockerfile -t ambassadors_temp_image .
+# build final container with matching UID
 docker build -f updateUID.Dockerfile -t ambassadors_clab:latest --build-arg BASE_IMAGE=ambassadors_temp_image --build-arg REMOTE_USER=clab --build-arg NEW_UID=$(id -u) --build-arg NEW_GID=$(id -g) --build-arg IMAGE_USER=clab .
 ```
 
@@ -393,6 +409,12 @@ docker run --rm -it --privileged \
   -v $(pwd):$(pwd) \
   ambassadors_clab:latest
 ```
+
+Test container features:
+
+- start the lab: `lab_start`
+- connect to leaf1: `leaf1`
+- stop the lab: `lab_stop`
 
 ## Possible Scale Caveats
 
