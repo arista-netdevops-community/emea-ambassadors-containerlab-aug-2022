@@ -44,7 +44,14 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo 'export TERM=xterm-256color' >>  $HOME/.zshrc \
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
-    && echo 'export PATH=$PATH:/home/avd/.local/bin' >> $HOME/.zshrc
+    && echo 'export PATH=$PATH:/home/avd/.local/bin' >> $HOME/.zshrc \
+    && echo 'alias lab_start="containerlab deploy -t ambassadors_custom_cfg.clab.yml --reconfigure"' >> $HOME/.zshrc \
+    && echo 'alias lab_stop="containerlab destroy -t ambassadors_custom_cfg.clab.yml --cleanup"' >> $HOME/.zshrc \
+    && echo 'alias leaf1="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-leaf1"' >> $HOME/.zshrc \
+    && echo 'alias leaf2="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-leaf2"' >> $HOME/.zshrc \
+    && echo 'alias spine1="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-spine1"' >> $HOME/.zshrc \
+    && echo 'alias spine2="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-spine2"' >> $HOME/.zshrc \
+    && echo 'alias a_host="sshpass -p admin ssh -o \"StrictHostKeyChecking no\" admin@clab-ambassadors_clab-a_host"' >> $HOME/.zshrc
 
 # install containerlab
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"

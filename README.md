@@ -378,7 +378,20 @@ Let's craft our own container now:
 
 ```bash
 docker build --rm --pull --no-cache -f Dockerfile -t ambassadors_temp_image .
-docker build -f updateUID.Dockerfile -t ambassadors_clab:latest --build-arg BASE_IMAGE=ambassadors_temp_image --build-arg REMOTE_USER=clab --build-arg NEW_UID=$(shell id -u) --build-arg NEW_GID=$(shell id -g) --build-arg IMAGE_USER=clab . ;
+docker build -f updateUID.Dockerfile -t ambassadors_clab:latest --build-arg BASE_IMAGE=ambassadors_temp_image --build-arg REMOTE_USER=clab --build-arg NEW_UID=$(shell id -u) --build-arg NEW_GID=$(shell id -g) --build-arg IMAGE_USER=clab .
+```
+
+Start the container:
+
+```bash
+docker run --rm -it --privileged \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /etc/hosts:/etc/hosts \
+  --pid="host" \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  ambassadors_clab:latest zsh
 ```
 
 ## Possible Scale Caveats
