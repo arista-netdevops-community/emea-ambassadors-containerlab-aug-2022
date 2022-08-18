@@ -416,10 +416,16 @@ Test container features:
 - connect to leaf1: `leaf1`
 - stop the lab: `lab_stop`
 
+Custom container can be very useful if you have special requirements or want to create an environment with all dependencies pre-installed and minimum actions required from the user to start the lab. Example: [avd-quickstart-containerlab](https://github.com/arista-netdevops-community/avd-quickstart-containerlab)
+
 ## Possible Scale Caveats
 
 to-be-updated
 
 ## References
 
-to-be-updated
+- [avd-quickstart-containerlab](https://github.com/arista-netdevops-community/avd-quickstart-containerlab)
+- [avd-all-in-one-container](https://github.com/arista-netdevops-community/avd-all-in-one-container)
+- [avd-cEOS-Lab](https://github.com/arista-netdevops-community/avd-cEOS-Lab)
+- [kvm-lab-for-network-engineers](https://github.com/arista-netdevops-community/kvm-lab-for-network-engineers)
+- [Containerlab documentation](https://containerlab.dev)

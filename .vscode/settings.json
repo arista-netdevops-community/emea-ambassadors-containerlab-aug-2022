@@ -10,6 +10,7 @@
         "localds",
         "mgmt",
         "pwauth",
+        "quickstart",
         "topo",
         "usermod",
         "virt",
