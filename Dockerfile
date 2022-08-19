@@ -1,4 +1,4 @@
-FROM python:3.10.6-slim
+FROM python:3.9.6-slim
 
 # install some tools
 RUN apt-get update \
