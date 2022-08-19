@@ -58,6 +58,7 @@ RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
 # install Ansible
 RUN pip3 install "ansible-core>=2.11.3,<2.13.0" \
+    && ansible-galaxy collection install ansible.netcommon \
     # install community.general to support callback plugins in ansible.cfg, etc.
     && ansible-galaxy collection install community.general
 
