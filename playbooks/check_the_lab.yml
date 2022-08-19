@@ -19,5 +19,5 @@
     register: cli_output
   - name: display result
     ansible.builtin.debug:
-      msg: "{{ cli_output.stdout[0] }}"
-      # var: cli_output.stdout[0]
+      msg: "show ip bgp summary"
+      var: cli_output.stdout.stdout_lines
