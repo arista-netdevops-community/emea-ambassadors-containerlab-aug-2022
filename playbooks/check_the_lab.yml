@@ -14,8 +14,7 @@
   - name: run show commands
     arista.eos.eos_command:
       commands:
-      - command: show ip bgp summary
-        output: text
+      - show ip bgp summary
     register: cli_output
   - name: display result
     ansible.builtin.debug:
