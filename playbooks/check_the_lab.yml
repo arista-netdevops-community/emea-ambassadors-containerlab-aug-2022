@@ -13,9 +13,11 @@
   tasks:
   - name: run show commands
     eos_command:
-      commands: "{{ item }}"
-    with_items:
-    - show ip bgp summary
+      commands:
+      - show ip bgp summary
+      # commands: "{{ item }}"
+    # with_items:
+    # - show ip bgp summary
     register: cli_output
   - name: display result
     debug:
