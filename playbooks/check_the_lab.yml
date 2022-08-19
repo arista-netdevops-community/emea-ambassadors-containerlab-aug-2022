@@ -15,13 +15,13 @@
     arista.eos.eos_command:
       commands:
       - show ip bgp summary
-      provider:
-        username: clab
-        password: clab
-        transport: eapi
-        authorize: yes
-        use_ssl: yes
-        validate_certs: no
+      # provider:
+      #   username: clab
+      #   password: clab
+      #   transport: eapi
+      #   authorize: yes
+      #   use_ssl: yes
+      #   validate_certs: no
       # commands: "{{ item }}"
     # with_items:
     # - show ip bgp summary
