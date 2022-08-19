@@ -1,20 +1,27 @@
 ---
 - name: Run show commands on all switches and print the output
   hosts: all
-  vars:
-    ansible_connection: httpapi
-    ansible_network_os: eos
-    ansible_user: admin
-    ansible_password: admin
-    ansible_become: yes
-    ansible_become_method: enable
-    ansible_httpapi_use_ssl: true
-    ansible_httpapi_validate_certs: false
+  # vars:
+  #   ansible_connection: httpapi
+  #   ansible_network_os: eos
+  #   ansible_user: admin
+  #   ansible_password: admin
+  #   ansible_become: yes
+  #   ansible_become_method: enable
+  #   ansible_httpapi_use_ssl: true
+  #   ansible_httpapi_validate_certs: false
   tasks:
   - name: run show commands
     eos_command:
       commands:
       - show ip bgp summary
+      provider:
+        username: clab
+        password: clab
+        transport: eapi
+        authorize: yes
+        use_ssl: yes
+        validate_certs: no
       # commands: "{{ item }}"
     # with_items:
     # - show ip bgp summary
