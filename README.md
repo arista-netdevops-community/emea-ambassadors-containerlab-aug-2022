@@ -422,7 +422,33 @@ Custom container can be very useful if you have special requirements or want to 
 
 ## Possible Scale Caveats
 
-to-be-updated
+> WARNING: If you are planning to deploy a high scale lab, test it on a non-production host that you can access and recover any time. Incorrectly deployed Containerlab at scale can bring your host down due to high CPU utilization on start.
+
+Generally, Ubuntu systems have quite low `fs.inotify.max_user_instances` limit by default. Even if it was increased, older cEOS-lab containers can decrease system limit to 1256. That is not sufficient for a high scale lab. The lab may fail to start and even bring your host down due to high CPU.
+
+In reality increasing inotify limit on a modern host with high RAM will not create any disadvantages. If you are planning to deploy older cEOS-lab container, you can increase it manually.
+
+1st, define your inotify limit. You can safely assume that it will not be more than 1256*number of containers. But the required limit is expected to be significantly below that. Newer cEOS-lab images set the limit to 62800, that is a good number for most cLab deployments.
+
+Set your system limit: `sudo sysctl -w fs.inotify.max_user_instances=62800`
+
+Create 99-zceos.conf: `sudo sh -c 'echo "fs.inotify.max_user_instances = 62800" > /etc/sysctl.d/99-zceos.conf'`
+
+Check the limit: `sudo sysctl -a  | grep -i inotify`
+
+Mount the custom 99-zceos.conf to your cEOS-lab containers in the topology file:
+
+```yaml
+topology:
+  kinds:
+    ceos:
+      binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+```
+
+Add `--max-workers` and `--timeout` flags to your containerlab deploy command.
+
+> NOTE: as of 4.28 default cEOS-lab 99-zceos.conf was updated and configures fs.inotify.max_user_instances to 62800. It is recommended to use cEOS-lab 4.28 or higher and Ubuntu 20LTS or higher. Nevertheless, always test your lab environment first, check inotify limits and set `--max-workers` and `--timeout` flags for a high scale deployment.
 
 ## References
 
