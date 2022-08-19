@@ -22,4 +22,9 @@
     ansible.builtin.debug:
       msg:
       - "show ip bgp summary"
-      - "{% for line in cli_output.stdout_lines %}{{ line }}{% endfor %}"
+      - "{% for line in cli_output.stdout_lines[0] %}{{ line }}{% endfor %}"
+      - "show port-channel dense"
+      - "{% for line in cli_output.stdout_lines[1] %}{{ line }}{% endfor %}"
+      - "show lldp neighbors"
+      - "{% for line in cli_output.stdout_lines[2] %}{{ line }}{% endfor %}"
+      
