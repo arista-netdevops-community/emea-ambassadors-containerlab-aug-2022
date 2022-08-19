@@ -1,0 +1,22 @@
+---
+- name: Run show commands on all switches and print the output
+  hosts: all
+  ansible_connection: httpapi
+  ansible_network_os: eos
+  ansible_user: admin
+  ansible_password: admin
+  ansible_network_os: eos
+  ansible_become: yes
+  ansible_become_method: enable
+  ansible_httpapi_use_ssl: true
+  ansible_httpapi_validate_certs: false
+  tasks:
+  - name: run show commands
+    eos_command:
+      commands: "{{ item }}"
+    with_items:
+    - show ip bgp summary
+    register: cli_output
+  - name: display result
+      debug:
+        var: cli_output

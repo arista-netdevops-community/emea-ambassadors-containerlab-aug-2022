@@ -18,6 +18,7 @@
   - [Make Packet Capture](#make-packet-capture)
   - [Containerlab in a Container](#containerlab-in-a-container)
   - [Building a Custom Container with cLab](#building-a-custom-container-with-clab)
+  - [Ansible with Containerlab](#ansible-with-containerlab)
   - [Possible Scale Caveats](#possible-scale-caveats)
   - [References](#references)
 
@@ -389,6 +390,7 @@ The custom container has following features:
 - Aliases to start and stop the lab and connect to the lab switches
 - Entrypoint
 - UID and GID inside the container matching UID and GID outside the container
+- Ansible included
 
 Let's build our own container now:
 
@@ -419,6 +421,15 @@ Test container features:
 - stop the lab: `lab_stop`
 
 Custom container can be very useful if you have special requirements or want to create an environment with all dependencies pre-installed and minimum actions required from the user to start the lab. Example: [avd-quickstart-containerlab](https://github.com/arista-netdevops-community/avd-quickstart-containerlab)
+
+## Ansible with Containerlab
+
+When containerlab starts it automatically creates Ansible inventory that can be used to automate certain tasks in the lab.  
+Start `ambassadors_clab:latest` container we have created earlier and deploy the lab.  
+Inspect the Ansible inventory: `cat clab-ambassadors_clab/ansible-inventory.yml`  
+Ansible is already installed inside the container and ansible.cfg is provided in the repository as well as the playbook `check_the_lab.yml`.
+Run the playbook by executing command `ansible-playbook playbooks/check_the_lab.yml`  
+This playbook will execute number of show commands on all switches in the lab and present output on the screen.
 
 ## Possible Scale Caveats
 
