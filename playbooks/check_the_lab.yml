@@ -14,7 +14,8 @@
   - name: run show commands
     arista.eos.eos_command:
       commands:
-      - show ip bgp summary
+      - command: show ip bgp summary
+        output: text
     register: cli_output
   - name: display result
     debug:
