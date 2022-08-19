@@ -18,5 +18,7 @@
         output: text
     register: cli_output
   - name: display result
-    debug:
-      var: cli_output.stdout[0]
+    ansible.builtin.debug:
+      msg:
+      - "{{ cli_output.stdout[0] }}"
+      # var: cli_output.stdout[0]
