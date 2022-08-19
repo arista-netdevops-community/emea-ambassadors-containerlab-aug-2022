@@ -11,23 +11,34 @@ topology:
       image: ceos-lab:latest
   defaults:
     kind: ceos
-    binds:
-      # change Ma0 to Ma1
-      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
+  
   nodes:
     spine1:
       mgmt_ipv4: 192.168.123.11
       startup-config: init-configs/spine1.cfg
+      binds:
+      # change Ma0 to Ma1
+      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
     spine2:
       mgmt_ipv4: 192.168.123.12
       startup-config: init-configs/spine2.cfg
+      binds:
+      # change Ma0 to Ma1
+      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
     leaf1:
       mgmt_ipv4: 192.168.123.21
       startup-config: init-configs/leaf1.cfg
+      binds:
+      # change Ma0 to Ma1
+      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
     leaf2:
       mgmt_ipv4: 192.168.123.22
       startup-config: init-configs/leaf2.cfg
+      binds:
+      # change Ma0 to Ma1
+      - interface_mapping.json:/mnt/flash/EosIntfMapping.json:ro
     a_host:
+      # default interface names will be used for the host
       mgmt_ipv4: 192.168.123.100
       startup-config: init-configs/a_host.cfg
 
