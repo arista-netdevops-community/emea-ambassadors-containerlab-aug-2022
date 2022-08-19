@@ -449,6 +449,7 @@ topology:
 Add `--max-workers` and `--timeout` flags to your containerlab deploy command.
 
 > NOTE: as of 4.28 default cEOS-lab 99-zceos.conf was updated and configures fs.inotify.max_user_instances to 62800. It is recommended to use cEOS-lab 4.28 or higher and Ubuntu 20LTS or higher. Nevertheless, always test your lab environment first, check inotify limits and set `--max-workers` and `--timeout` flags for a high scale deployment.
+> GOOD TO KNOW: inotify is also the main reason why cEOS-lab will not work on M1 Mac.
 
 ## References
 
