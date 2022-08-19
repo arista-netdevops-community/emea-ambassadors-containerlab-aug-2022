@@ -19,4 +19,4 @@
     register: cli_output
   - name: display result
     debug:
-      var: cli_output
+      var: cli_output.stdout
