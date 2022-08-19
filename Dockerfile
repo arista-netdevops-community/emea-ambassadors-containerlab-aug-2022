@@ -56,6 +56,11 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
 # install containerlab
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
+# install Ansible
+RUN pip3 install "ansible-core>=2.11.3,<2.13.0" \
+    # install community.general to support callback plugins in ansible.cfg, etc.
+    && ansible-galaxy collection install community.general
+
 # add entrypoint script
 COPY ./entrypoint.sh /bin/entrypoint.sh
 RUN sudo chmod +x /bin/entrypoint.sh
