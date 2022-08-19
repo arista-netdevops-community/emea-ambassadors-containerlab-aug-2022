@@ -18,5 +18,5 @@
     - show ip bgp summary
     register: cli_output
   - name: display result
-      debug:
-        var: cli_output
+    debug:
+      var: cli_output
