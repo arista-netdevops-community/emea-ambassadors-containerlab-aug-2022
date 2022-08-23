@@ -208,7 +208,7 @@ c4cd010b2318   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   
 4d25882a1a08   ceos-lab:latest   "bash -c '/mnt/flash…"   About an hour ago   Up About an hour             clab-ambassadors_clab-a_host
 ```
 
-You can call the table again any time with `sudo clab inspect ambassadors_default_cfg.clab.yml`.
+You can call the table again any time with `sudo clab inspect -t ambassadors_default_cfg.clab.yml`.
 
 Containerlab creates corresponding entries in the `/etc/hosts` file as well:
 
